@@ -1,0 +1,170 @@
+Original prompt: 做一个技能丰富且有挑战乐趣的吸血鬼幸存者web游戏，敌人像贪吃蛇那样排成队进攻玩家
+
+## Progress Log
+- Initialized a new Vite + Vanilla JS project and established a single-canvas game architecture.
+- Implemented run state, save migration placeholder (V1->V2), localStorage persistence, and restart flow.
+- Added full combat loop: auto-fire player, projectile simulation, snake enemies (head + body follow), elite/rusher variants, and multi-phase boss behavior.
+- Implemented body-segment shortening and head-kill chain collapse with pickup bursts.
+- Added 28 in-run skills with 3-choice level-up flow and 5 fixed evolution synergies.
+- Added complete out-of-run talent tree (40 nodes, 3 branches, single meta currency, prereq unlock checks).
+- Implemented PC controls and mobile portrait joystick controls with pause/confirm touch buttons.
+- Added adaptive quality scaler (FPS window, downscale/upscale with hysteresis) and quality-dependent spawn caps.
+- Exposed required testing hooks:
+  - `window.render_game_to_text()`
+  - `window.advanceTime(ms)`
+  - `window.restartGame()`
+- Added HUD, start/pause/levelup/end overlays, and talent tree UI.
+
+## Test/Debug Notes
+- Build should be validated with `npm run build`.
+- Runtime gameplay should be validated via `npm run dev` plus Playwright skill client.
+- Node version warning appears for Vite engine (`20.18.1` vs recommended `20.19+`), but install/build may still work.
+
+## TODO / Suggestions for Next Agent
+- Tune balance for exact 10-12 minute average run across player skill levels.
+- Improve segment hit handling to remove nearest segment index (currently shortens by trimming tail for readability/perf).
+- Add richer visual/audio feedback for evolutions and boss phase transitions.
+- Expand boss phase telegraphs and danger-zone indicators for mobile readability.
+- Add explicit regression tests for save corruption fallback and long-session memory growth.
+- Validation run complete:
+  - `npm run build` succeeds.
+  - Ran web-game Playwright client against `http://127.0.0.1:5173` and captured screenshots + state dumps under `output/web-game/`.
+  - Verified gameplay screenshots include snake queue behavior and pickup clusters.
+  - Verified text state enters level-up mode with three options (state-3+).
+- Additional fix: projectile-killed snakes are now immediately filtered out to prevent stale dead-head entries in text state during level-up transitions.
+- Re-ran build and Playwright loop after fix; state dumps no longer show stale dead snake records.
+- Bugfix: level-up 3-choice interaction now stable. Root cause was per-frame option DOM rebuild; fixed by rendering options only when token changes.
+- Added level-up hotkeys `1/2/3` as selection fallback.
+- Enemy update: snakes now default to long bodies (~100 segments normal), with independent per-segment HP and per-index segment destruction (not tail-only pop).
+- Spawn tuning adjusted for long-body snakes (lower simultaneous snake cap and slower spawn intervals).
+- Validation: Playwright forced-levelup click test confirms selection works (`mode: levelup -> playing`, chosen skill level increments).
+- Implemented combat correctness refactor:
+  - Added projectile temporal fields (`prevX`, `prevY`, `travelT`, `isCrit`) and moved to segment-sweep CCD collision checks.
+  - Added closest-hit resolution per projectile path (`nearest t`) to prevent multi-hit tunneling artifacts in one frame.
+  - Reordered combat pipeline in update loop to: projectile integration -> snake movement -> projectile CCD -> snake contact damage.
+- Added performance-oriented collision pipeline:
+  - Spatial hash grid (`cell=64`) for enemy head/segment collision candidates.
+  - Quality-tier collision budgets and segment sampling stride reduction for low quality and far snakes.
+  - Exposed runtime perf counters (`activeSegments`, `collisionChecks`).
+- Snake design rebalance:
+  - Normal snakes now 20-40 segments.
+  - Elite snakes now 80-110 segments.
+  - Boss snakes now 140-180 segments.
+  - Segment deletion remains per-hit-index with stable `segmentId` on segments.
+  - Head kill drop burst now uses segmented scaling to avoid drop storms on very long snakes.
+- Added first-pass high-quality combat feedback:
+  - Hit-stop tiers (normal / crit / boss weak hit).
+  - Screen shake tiers with mobile amplitude reduction.
+  - Player damage flash and low-HP edge pulse.
+  - Boss hit localized flash.
+  - Lightweight layered SFX event queue via WebAudio (`src/game/audio.js`) wired into frame loop.
+- Added debug/state interface fields:
+  - `render_game_to_text` now includes `perf.activeSegments`, `perf.collisionChecks`, `combat.lastHit`, `combat.ccdEnabled`.
+- Validation executed:
+  - `npm run build` succeeds after refactor.
+  - CCD regression (high-speed): `hp 100 -> 90`, projectile consumed when no pierce.
+  - Low-speed parity: same hit semantics as high-speed.
+  - Segment independence test: targeted segment id removed (not tail-pop), list changed `[1,2,3,4] -> [1,2,4]`.
+  - Forced levelup click test passes (`mode levelup -> playing`, skill level increments).
+  - 60s deterministic mobile-like scenario runs without crash; quality system remains stable.
+- Interaction + art direction redesign pass completed (frontend-design skill):
+  - Rebuilt UI visual language to a warm arcade-command aesthetic with distinct typography, asymmetrical briefing layout, and stronger hierarchy.
+  - Updated start/levelup/pause/end/talent surfaces with richer visual depth, clearer action grouping, and bolder affordances.
+  - Added explicit levelup interaction cues (1/2/3 badges on cards + guidance text).
+  - Refined mobile control presentation for portrait readability and stronger touch targets.
+- Files updated for redesign:
+  - `index.html` (structure and copy)
+  - `src/style.css` (full style system refresh)
+  - `src/ui/ui.js` (levelup option card rendering + rarity/state labels)
+- Validation after redesign:
+  - `npm run build` passes.
+  - Custom Playwright captures generated:
+    - `output/web-game/redesign-start.png`
+    - `output/web-game/redesign-gameplay.png`
+    - `output/web-game/redesign-levelup.png`
+    - `output/web-game/redesign-mobile.png`
+    - `output/web-game/redesign-state.json`
+  - Levelup click flow still works (`mode levelup -> playing`, selected skill increments).
+  - Levelup numeric key path verified via key hold timing in automation (`3` selects third card).
+- Note:
+  - The provided `web_game_playwright_client` intermittently times out when clicking `#start-btn` in this project; fallback custom Playwright script used for deterministic validation artifacts.
+- Feature pass (requested): added 4 new interesting in-run skills with real combat hooks:
+  - `轨道飞刃` (orbital blade periodic hit)
+  - `处决协议` (execute threshold on low HP enemies, reduced effect on boss)
+  - `肾上腺回路` (on-hit temporary speed/fire-rate boost)
+  - `猎杀脉冲` (kill-triggered AoE pulse)
+- Feature pass (requested): expanded SFX coverage and events:
+  - new events include `run_start`, `boss_spawn`, `dash`, `skill_pick`, `pickup_xp`, `pickup_heal`, `pickup_chest`, `pulse`, `adrenaline`, `orbit_hit`.
+  - audio engine now supports optional second tone layering and per-event gain for clearer differentiation.
+- Feature pass (requested): boss cadence changed to once per minute:
+  - wave scheduler now spawns boss at each 60s mark while run is active.
+  - 11:00 minute boss is flagged `isFinalBoss`; only this boss kill sets victory.
+  - render text enemy payload now includes `isFinalBoss` for debugging.
+- UX/polish:
+  - added in-game orbit blade visuals and adrenaline aura ring.
+  - overlay warning now shows per-minute boss signal countdown and final boss engagement state.
+  - added inline favicon to remove missing `favicon.ico` 404 noise.
+- Validation executed after changes:
+  - `npm run build` passed.
+  - `$WEB_GAME_CLIENT` rerun (with `node --experimental-default-type=module`) against `http://127.0.0.1:5173`, new screenshots/state JSON generated at `output/web-game/shot-*.png`, `output/web-game/state-*.json`, no `errors-*.json` generated.
+  - extra Playwright regression script generated artifacts:
+    - `output/web-game/feature-started.png`
+    - `output/web-game/feature-orbit-skill.png`
+    - `output/web-game/feature-boss-minute.png`
+    - `output/web-game/feature-report.json`
+  - regression assertions in `feature-report.json` passed for: minute-1/minute-2 boss spawn, final boss flag at 11:00+, dash + pickup SFX events, no console errors.
+- Godlike optimization pass (5-point upgrade) completed:
+  - Build diversity: added pre-run doctrine system (3 styles) with distinct combat behavior:
+    - `前锋压制` (suppression heat + extra pressure shot)
+    - `血仪狩猎` (ritual stacks + AoE execution burst)
+    - `折跃幻影` (dash-triggered phantom burst + crit mobility)
+  - Readability upgrades:
+    - target lock highlight on focused snake head,
+    - boss barrier ring visualization,
+    - charge telegraph lane rendering,
+    - off-screen threat arrows for elite/rusher/boss,
+    - stronger enemy projectile danger glow and chest pickup pulse.
+  - Boss encounter depth:
+    - minute affix cycle implemented (`barrier` -> `totem` -> `charge`),
+    - final (11:00) boss stacks all three affixes,
+    - support `totem` mechanic entities orbiting boss and reducing incoming boss damage.
+  - Long-run strategy depth:
+    - added persistent pre-run `危险契约` selection (4 options, risk/reward tradeoff),
+    - contract effects now modify runtime difficulty/reward (`enemySpeedMult`, `soulRewardMult`, xp pressure, etc.),
+    - contract/doctrine selection saved in save V3 migration fields.
+  - Peak feel upgrades:
+    - added combat heat meter + overdrive tiers,
+    - overdrive visual overlays and layered SFX events,
+    - expanded SFX event set (`overdrive_start`, `overdrive_peak`, `boss_break`, etc.).
+- New files:
+  - `src/data/loadouts.js`
+  - `src/game/systems/loadoutSystem.js`
+- Updated key files:
+  - `src/game/state.js`
+  - `src/game/update.js`
+  - `src/game/systems/enemySystem.js`
+  - `src/game/systems/waveSystem.js`
+  - `src/game/systems/skillSystem.js`
+  - `src/game/systems/dropSystem.js`
+  - `src/game/audio.js`
+  - `src/game/render.js`
+  - `src/ui/ui.js`
+  - `src/style.css`
+  - `index.html`
+  - `src/main.js`
+- Validation:
+  - `npm run build` passes.
+  - `$WEB_GAME_CLIENT` run on `http://127.0.0.1:5189` with output screenshots/state JSON refreshed (`output/web-game/shot-*.png`, `state-*.json`).
+  - Additional targeted regression script passed and written:
+    - `output/web-game/godlike-report.json`
+  - Extra visual captures:
+    - `output/web-game/godlike-menu.png`
+    - `output/web-game/godlike-final-boss.png`
+- Talent UX fix:
+  - Resolved talent tree click instability caused by per-frame DOM rebuild in talent mode; now tree re-renders only when talent data token changes.
+  - Added Chinese talent effect localization (replacing raw `effect.key` ids in UI).
+  - Added talent hint line to show unlock feedback (`已学习天赋` / failure reason like `灵魂点不足`, `前置天赋未满足`).
+  - Save migration robustness improved: `metaCurrency` now parses numeric strings instead of dropping to 0.
+- Validation:
+  - Playwright check confirms unlocking flow works: after setting `metaCurrency=100`, click `atk_1` => unlocked true, currency 92, hint `已学习天赋。`.
+  - `npm run build` passes.

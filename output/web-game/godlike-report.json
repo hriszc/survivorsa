@@ -1,0 +1,131 @@
+{
+  "loadoutCount": {
+    "doctrineButtons": 3,
+    "contractButtons": 4
+  },
+  "runStart": {
+    "doctrine": "血仪狩猎",
+    "contract": "战税条款",
+    "fireRate": 1.584,
+    "damage": 24.839999999999996,
+    "enemySpeedMult": 1.18,
+    "soulRewardMult": 1.55
+  },
+  "bossAffixes": {
+    "minute1": {
+      "minute": 1,
+      "last": 1,
+      "affixes": [
+        "barrier"
+      ]
+    },
+    "minute2": {
+      "minute": 2,
+      "last": 2,
+      "affixes": [
+        "totem"
+      ]
+    },
+    "minute3": {
+      "minute": 3,
+      "last": 3,
+      "affixes": [
+        "charge"
+      ]
+    },
+    "final": {
+      "minute": 11,
+      "affixes": [
+        "barrier",
+        "totem",
+        "charge"
+      ],
+      "isFinal": true
+    },
+    "overdriveLevel": 2
+  },
+  "textState": {
+    "mode": "playing",
+    "time": 660.18,
+    "score": 0,
+    "player": {
+      "x": 0,
+      "y": 0,
+      "hp": 999999,
+      "maxHp": 999999,
+      "speed": 270,
+      "buffs": []
+    },
+    "progression": {
+      "level": 1,
+      "xp": 0,
+      "xpToNext": 1000000000
+    },
+    "enemies": [
+      {
+        "id": 6,
+        "type": "rusher",
+        "isFinalBoss": false,
+        "affixes": [],
+        "head": {
+          "x": -1113.4,
+          "y": -536.8,
+          "hp": 172.5,
+          "maxHp": 172.5
+        },
+        "segmentCount": 50
+      },
+      {
+        "id": 7,
+        "type": "boss",
+        "isFinalBoss": true,
+        "affixes": [
+          "barrier",
+          "totem",
+          "charge"
+        ],
+        "head": {
+          "x": 355.3,
+          "y": 0,
+          "hp": 26732.5,
+          "maxHp": 26754
+        },
+        "segmentCount": 137
+      }
+    ],
+    "projectiles": [
+      {
+        "x": 186.1,
+        "y": 0,
+        "r": 7
+      }
+    ],
+    "pickups": [],
+    "ui": {
+      "levelupOpen": false,
+      "levelupChoices": [],
+      "quality": "中",
+      "timeText": "11:00",
+      "doctrine": "血仪狩猎",
+      "contract": "战税条款"
+    },
+    "perf": {
+      "activeSegments": 96,
+      "collisionChecks": 0
+    },
+    "combat": {
+      "lastHit": {
+        "hitTarget": "7:head",
+        "hitType": "boss_weak_hit",
+        "hitT": 0.997
+      },
+      "ccdEnabled": true,
+      "heat": 0.9,
+      "overdriveLevel": 2
+    },
+    "meta": {
+      "coordinateSystem": "origin=top-left in render output; world uses center-origin. x->right, y->down"
+    }
+  },
+  "consoleErrors": []
+}

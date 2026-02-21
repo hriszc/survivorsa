@@ -1,0 +1,48 @@
+export const TALENT_NODES = [
+  { id: "atk_1", branch: "攻击", tier: 1, name: "校准准星", cost: 8, effect: { key: "damageMult", value: 0.05 }, prereq: [] },
+  { id: "atk_2", branch: "攻击", tier: 1, name: "高压电容", cost: 8, effect: { key: "attackSpeedMult", value: 0.05 }, prereq: [] },
+  { id: "atk_3", branch: "攻击", tier: 2, name: "射线聚焦", cost: 12, effect: { key: "projectileSpeedMult", value: 0.08 }, prereq: ["atk_1"] },
+  { id: "atk_4", branch: "攻击", tier: 2, name: "动能灌注", cost: 12, effect: { key: "baseDamageFlat", value: 2 }, prereq: ["atk_2"] },
+  { id: "atk_5", branch: "攻击", tier: 3, name: "弹道精进", cost: 16, effect: { key: "critChanceFlat", value: 0.03 }, prereq: ["atk_3"] },
+  { id: "atk_6", branch: "攻击", tier: 3, name: "穿甲微刻", cost: 16, effect: { key: "pierceBonus", value: 1 }, prereq: ["atk_4"] },
+  { id: "atk_7", branch: "攻击", tier: 4, name: "暴击回路", cost: 20, effect: { key: "critDamageMult", value: 0.12 }, prereq: ["atk_5"] },
+  { id: "atk_8", branch: "攻击", tier: 4, name: "火力并联", cost: 22, effect: { key: "projectileCountBonus", value: 1 }, prereq: ["atk_6"] },
+  { id: "atk_9", branch: "攻击", tier: 5, name: "雷击继电", cost: 26, effect: { key: "chainChance", value: 0.12 }, prereq: ["atk_7"] },
+  { id: "atk_10", branch: "攻击", tier: 5, name: "流星散射", cost: 26, effect: { key: "spreadControl", value: 0.15 }, prereq: ["atk_8"] },
+  { id: "atk_11", branch: "攻击", tier: 6, name: "无尽火力", cost: 32, effect: { key: "attackSpeedMult", value: 0.08 }, prereq: ["atk_9", "atk_10"] },
+  { id: "atk_12", branch: "攻击", tier: 6, name: "破灭脉冲", cost: 34, effect: { key: "vsBossMult", value: 0.14 }, prereq: ["atk_10"] },
+  { id: "atk_13", branch: "攻击", tier: 7, name: "湮灭核心", cost: 40, effect: { key: "damageMult", value: 0.12 }, prereq: ["atk_11"] },
+  { id: "atk_14", branch: "攻击", tier: 7, name: "超维射线", cost: 42, effect: { key: "projectileSizeMult", value: 0.2 }, prereq: ["atk_12"] },
+
+  { id: "sur_1", branch: "生存", tier: 1, name: "生命纤维", cost: 8, effect: { key: "maxHpFlat", value: 12 }, prereq: [] },
+  { id: "sur_2", branch: "生存", tier: 1, name: "应激修复", cost: 8, effect: { key: "regenFlat", value: 0.25 }, prereq: [] },
+  { id: "sur_3", branch: "生存", tier: 2, name: "缓冲装甲", cost: 12, effect: { key: "damageReduction", value: 0.03 }, prereq: ["sur_1"] },
+  { id: "sur_4", branch: "生存", tier: 2, name: "再生强化", cost: 12, effect: { key: "regenFlat", value: 0.3 }, prereq: ["sur_2"] },
+  { id: "sur_5", branch: "生存", tier: 3, name: "紧急包扎", cost: 16, effect: { key: "startHealOrb", value: 1 }, prereq: ["sur_3"] },
+  { id: "sur_6", branch: "生存", tier: 3, name: "棱镜涂层", cost: 16, effect: { key: "shieldMaxFlat", value: 16 }, prereq: ["sur_4"] },
+  { id: "sur_7", branch: "生存", tier: 4, name: "减震内衬", cost: 20, effect: { key: "damageReduction", value: 0.04 }, prereq: ["sur_5"] },
+  { id: "sur_8", branch: "生存", tier: 4, name: "护盾回灌", cost: 20, effect: { key: "shieldRegenFlat", value: 0.35 }, prereq: ["sur_6"] },
+  { id: "sur_9", branch: "生存", tier: 5, name: "痛觉门控", cost: 24, effect: { key: "thornsFlat", value: 3 }, prereq: ["sur_7"] },
+  { id: "sur_10", branch: "生存", tier: 5, name: "闪避预判", cost: 24, effect: { key: "dodgeFlat", value: 0.03 }, prereq: ["sur_8"] },
+  { id: "sur_11", branch: "生存", tier: 6, name: "逆境狂热", cost: 32, effect: { key: "lowHpDamageBoost", value: 0.12 }, prereq: ["sur_9", "sur_10"] },
+  { id: "sur_12", branch: "生存", tier: 6, name: "生命储备", cost: 34, effect: { key: "maxHpFlat", value: 24 }, prereq: ["sur_10"] },
+  { id: "sur_13", branch: "生存", tier: 7, name: "不灭意志", cost: 44, effect: { key: "reviveCharge", value: 1 }, prereq: ["sur_11", "sur_12"] },
+
+  { id: "eco_1", branch: "经济", tier: 1, name: "萃取技巧", cost: 8, effect: { key: "xpGainMult", value: 0.05 }, prereq: [] },
+  { id: "eco_2", branch: "经济", tier: 1, name: "灵魂感应", cost: 8, effect: { key: "soulGainMult", value: 0.06 }, prereq: [] },
+  { id: "eco_3", branch: "经济", tier: 2, name: "磁场稳定", cost: 12, effect: { key: "pickupRadiusFlat", value: 20 }, prereq: ["eco_1"] },
+  { id: "eco_4", branch: "经济", tier: 2, name: "战利品回收", cost: 12, effect: { key: "chestChance", value: 0.04 }, prereq: ["eco_2"] },
+  { id: "eco_5", branch: "经济", tier: 3, name: "经验熔炉", cost: 16, effect: { key: "xpGainMult", value: 0.07 }, prereq: ["eco_3"] },
+  { id: "eco_6", branch: "经济", tier: 3, name: "魂锭提纯", cost: 16, effect: { key: "soulGainMult", value: 0.08 }, prereq: ["eco_4"] },
+  { id: "eco_7", branch: "经济", tier: 4, name: "起步补给", cost: 20, effect: { key: "startXp", value: 12 }, prereq: ["eco_5"] },
+  { id: "eco_8", branch: "经济", tier: 4, name: "稀有检索", cost: 20, effect: { key: "rareSkillChance", value: 0.08 }, prereq: ["eco_6"] },
+  { id: "eco_9", branch: "经济", tier: 5, name: "战场勘探", cost: 24, effect: { key: "pickupRadiusFlat", value: 22 }, prereq: ["eco_7"] },
+  { id: "eco_10", branch: "经济", tier: 5, name: "灵魂税收", cost: 26, effect: { key: "soulOnLevelup", value: 1 }, prereq: ["eco_8"] },
+  { id: "eco_11", branch: "经济", tier: 6, name: "丰收协议", cost: 32, effect: { key: "xpGainMult", value: 0.1 }, prereq: ["eco_9"] },
+  { id: "eco_12", branch: "经济", tier: 6, name: "灵源回响", cost: 34, effect: { key: "soulGainMult", value: 0.1 }, prereq: ["eco_10"] },
+  { id: "eco_13", branch: "经济", tier: 7, name: "繁荣奇点", cost: 44, effect: { key: "metaBonusAll", value: 0.05 }, prereq: ["eco_11", "eco_12"] },
+];
+
+export const TALENT_BY_ID = Object.fromEntries(TALENT_NODES.map((node) => [node.id, node]));
+
+export const TALENT_BRANCHES = ["攻击", "生存", "经济"];

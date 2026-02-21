@@ -1,0 +1,467 @@
+{
+  "skillCheck": {
+    "mode": "playing",
+    "orbitBlades": 1,
+    "executeThreshold": 0,
+    "killPulseLevel": 0,
+    "skillLevels": {
+      "orbital_blades": 1
+    }
+  },
+  "minuteBoss": {
+    "bossCount1": 1,
+    "minute1": 1,
+    "bossCount2": 1,
+    "minute2": 2,
+    "finalBoss": true,
+    "finalBossFlag": true,
+    "finalBossSpawned": true,
+    "soundEvents": [
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "crit",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "boss_spawn",
+      "boss_hit",
+      "hit",
+      "boss_hit",
+      "hit",
+      "hit",
+      "kill",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "crit",
+      "kill",
+      "hit",
+      "hit",
+      "kill",
+      "hit",
+      "hit",
+      "hit",
+      "kill",
+      "crit",
+      "kill",
+      "boss_spawn",
+      "hit",
+      "boss_hit",
+      "hit",
+      "boss_hit",
+      "hit",
+      "kill",
+      "boss_hit",
+      "boss_hit",
+      "boss_hit",
+      "boss_spawn",
+      "hit",
+      "boss_hit"
+    ]
+  },
+  "audioCheck": {
+    "sounds": [
+      "dash",
+      "boss_hit",
+      "pickup_xp",
+      "pickup_heal",
+      "pickup_chest"
+    ]
+  },
+  "consoleErrors": [],
+  "textState": {
+    "mode": "levelup",
+    "time": 661.05,
+    "score": 2534,
+    "player": {
+      "x": 0,
+      "y": 0,
+      "hp": 999999,
+      "maxHp": 999999,
+      "speed": 270,
+      "buffs": [
+        "dashingTime"
+      ]
+    },
+    "progression": {
+      "level": 1,
+      "xp": 19,
+      "xpToNext": 1000000000
+    },
+    "enemies": [
+      {
+        "id": 64,
+        "type": "rusher",
+        "isFinalBoss": false,
+        "head": {
+          "x": 61.2,
+          "y": -306.3,
+          "hp": 154.4,
+          "maxHp": 172.4
+        },
+        "segmentCount": 50
+      },
+      {
+        "id": 65,
+        "type": "normal",
+        "isFinalBoss": false,
+        "head": {
+          "x": -448.5,
+          "y": -651.3,
+          "hp": 56.8,
+          "maxHp": 56.8
+        },
+        "segmentCount": 40
+      },
+      {
+        "id": 66,
+        "type": "normal",
+        "isFinalBoss": false,
+        "head": {
+          "x": -465.8,
+          "y": 654.2,
+          "hp": 56.8,
+          "maxHp": 56.8
+        },
+        "segmentCount": 40
+      },
+      {
+        "id": 67,
+        "type": "boss",
+        "isFinalBoss": true,
+        "head": {
+          "x": 162.5,
+          "y": 0,
+          "hp": 26724.5,
+          "maxHp": 26754
+        },
+        "segmentCount": 137
+      },
+      {
+        "id": 68,
+        "type": "normal",
+        "isFinalBoss": false,
+        "head": {
+          "x": -517.9,
+          "y": -799.5,
+          "hp": 56.8,
+          "maxHp": 56.8
+        },
+        "segmentCount": 40
+      },
+      {
+        "id": 69,
+        "type": "normal",
+        "isFinalBoss": false,
+        "head": {
+          "x": -309.2,
+          "y": -786.4,
+          "hp": 56.8,
+          "maxHp": 56.8
+        },
+        "segmentCount": 40
+      }
+    ],
+    "projectiles": [],
+    "pickups": [
+      {
+        "type": "xp",
+        "x": 147.2,
+        "y": -739.8
+      },
+      {
+        "type": "xp",
+        "x": 150,
+        "y": -757.5
+      },
+      {
+        "type": "xp",
+        "x": 171.1,
+        "y": -740.6
+      },
+      {
+        "type": "xp",
+        "x": 139.4,
+        "y": -742.6
+      },
+      {
+        "type": "xp",
+        "x": 185,
+        "y": -748.4
+      },
+      {
+        "type": "xp",
+        "x": -144.7,
+        "y": 726.1
+      },
+      {
+        "type": "xp",
+        "x": -168.7,
+        "y": 739.1
+      },
+      {
+        "type": "xp",
+        "x": -175.4,
+        "y": 754
+      },
+      {
+        "type": "xp",
+        "x": -143.9,
+        "y": 732.3
+      },
+      {
+        "type": "xp",
+        "x": -152.1,
+        "y": 754
+      },
+      {
+        "type": "xp",
+        "x": 29.9,
+        "y": 753.3
+      },
+      {
+        "type": "xp",
+        "x": 41.4,
+        "y": 765.2
+      },
+      {
+        "type": "xp",
+        "x": 64.9,
+        "y": 738.9
+      },
+      {
+        "type": "xp",
+        "x": 29.3,
+        "y": 765.8
+      },
+      {
+        "type": "xp",
+        "x": 69.7,
+        "y": 741.8
+      },
+      {
+        "type": "xp",
+        "x": -749.3,
+        "y": -88.8
+      },
+      {
+        "type": "xp",
+        "x": -738.5,
+        "y": -49.3
+      },
+      {
+        "type": "xp",
+        "x": -749.2,
+        "y": -70.7
+      },
+      {
+        "type": "xp",
+        "x": -722.4,
+        "y": -65.8
+      },
+      {
+        "type": "xp",
+        "x": -727.7,
+        "y": -67.4
+      },
+      {
+        "type": "xp",
+        "x": 729.4,
+        "y": -249.8
+      },
+      {
+        "type": "xp",
+        "x": 685,
+        "y": -238.5
+      },
+      {
+        "type": "xp",
+        "x": 686.5,
+        "y": -227.8
+      },
+      {
+        "type": "xp",
+        "x": 660.5,
+        "y": -220.3
+      },
+      {
+        "type": "xp",
+        "x": 683.3,
+        "y": -254.7
+      }
+    ],
+    "ui": {
+      "levelupOpen": true,
+      "levelupChoices": [
+        "soul_greed",
+        "swift_step",
+        "projectile_speed"
+      ],
+      "quality": "中",
+      "timeText": "11:01"
+    },
+    "perf": {
+      "activeSegments": 180,
+      "collisionChecks": 2
+    },
+    "combat": {
+      "lastHit": {
+        "hitTarget": "67:head",
+        "hitType": "boss_weak_hit",
+        "hitT": 0.275
+      },
+      "ccdEnabled": true
+    },
+    "meta": {
+      "coordinateSystem": "origin=top-left in render output; world uses center-origin. x->right, y->down"
+    }
+  }
+}

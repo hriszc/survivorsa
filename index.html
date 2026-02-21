@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>蛇潮幸存者 Snake Survivor</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2308182a'/%3E%3Cpath d='M16 34c0-10 8-18 18-18s18 8 18 18-8 14-18 14c-5 0-8 4-8 7' fill='none' stroke='%23ffb16f' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='38' cy='28' r='3.5' fill='%23fff'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game-canvas" aria-label="Snake Survivor Game Canvas"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+
+      <div id="hud" class="panel cockpit">
+        <div class="hud-headline">SERPENT RAID // LIVE OPS</div>
+        <div class="hud-row main">
+          <div id="hud-time" class="value-pill">00:00</div>
+          <div id="hud-level" class="value-pill">Lv.1</div>
+          <div id="hud-fps" class="value-pill">FPS 60</div>
+        </div>
+        <div class="hud-row">
+          <div id="hud-score">分数 0</div>
+          <div id="hud-xp">XP 0 / 10</div>
+          <div id="hud-soul">灵魂点 0</div>
+        </div>
+        <div id="hud-loadout" class="hud-row single">流派 - / 契约 -</div>
+        <div class="bar-wrap">
+          <label>生命</label>
+          <div class="bar"><div id="hp-fill" class="bar-fill hp"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <label>护盾</label>
+          <div class="bar"><div id="shield-fill" class="bar-fill shield"></div></div>
+        </div>
+      </div>
+
+      <div id="start-screen" class="overlay visible">
+        <div class="card hero-shell">
+          <div>
+            <div class="title-chip">蛇潮幸存者</div>
+            <h1>零号战区：蛇群围猎</h1>
+            <p>走位、生存、构筑。每满 1 分钟都会有蛇王入场，11:00 的终局蛇王击杀后通关。</p>
+            <p>默认自动攻击，核心决策来自你的移动路线和升级取舍。</p>
+            <div class="loadout-grid">
+              <section>
+                <h3>战斗流派</h3>
+                <div id="doctrine-options" class="pick-list"></div>
+              </section>
+              <section>
+                <h3>危险契约</h3>
+                <div id="contract-options" class="pick-list"></div>
+              </section>
+            </div>
+            <div class="button-row">
+              <button id="start-btn" class="btn primary">开始任务</button>
+              <button id="talent-btn" class="btn">查看天赋树</button>
+            </div>
+          </div>
+          <div class="briefing">
+            <h3>控制简报</h3>
+            <p><kbd>WASD</kbd> 移动 · <kbd>Space</kbd> 冲刺 · <kbd>F</kbd> 全屏</p>
+            <p>升级时可用 <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 快速选项</p>
+            <p>移动端：左摇杆，右侧“确认/暂停”</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="levelup-screen" class="overlay">
+        <div class="card large levelup-card">
+          <div class="header-row">
+            <h2>战斗升级 · 三选一</h2>
+            <div class="levelup-tip">点击卡片或按 1 / 2 / 3</div>
+          </div>
+          <div id="levelup-options" class="option-list"></div>
+          <button id="reroll-btn" class="btn">重抽（1）</button>
+        </div>
+      </div>
+
+      <div id="pause-screen" class="overlay">
+        <div class="card">
+          <h2>系统暂停</h2>
+          <p>按 ESC 或点击“继续”返回战斗</p>
+          <button id="resume-btn" class="btn primary">继续</button>
+        </div>
+      </div>
+
+      <div id="end-screen" class="overlay">
+        <div class="card">
+          <h2 id="end-title">结算</h2>
+          <p id="end-summary"></p>
+          <div class="button-row">
+            <button id="restart-btn" class="btn primary">再开一局</button>
+            <button id="back-menu-btn" class="btn">返回主菜单</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="talent-screen" class="overlay">
+        <div class="card xlarge talent-shell">
+          <div class="header-row">
+            <h2>天赋总控台</h2>
+            <div id="talent-currency" class="value-pill">灵魂点 0</div>
+          </div>
+          <div id="talent-branches" class="talent-branches"></div>
+          <p id="talent-hint" class="talent-hint"></p>
+          <div class="button-row">
+            <button id="close-talent-btn" class="btn primary">关闭</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-controls">
+        <div id="joystick-area">
+          <div id="joystick-base"></div>
+          <div id="joystick-stick"></div>
+        </div>
+        <div class="mobile-right">
+          <button id="mobile-pause-btn" class="btn">暂停</button>
+          <button id="mobile-confirm-btn" class="btn primary">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
